@@ -1,5 +1,5 @@
 import '@/styles/global.css'
-import { Slot } from 'expo-router'
+import { Stack } from 'expo-router'
 import {
   useFonts,
   Poppins_400Regular,
@@ -8,6 +8,7 @@ import {
   Poppins_700Bold,
 } from '@expo-google-fonts/poppins'
 import { Loading } from '@/components/loading'
+import tailwind from 'tailwindcss/colors'
 
 export default function LayoutRoot() {
   const [fontLoaded] = useFonts({
@@ -21,5 +22,13 @@ export default function LayoutRoot() {
     return <Loading />
   }
 
-  return <Slot />
+  const backgroundColor = tailwind.zinc[950]
+  return (
+    <Stack
+      screenOptions={{
+        headerShown: false,
+        contentStyle: { backgroundColor },
+      }}
+    />
+  )
 }
