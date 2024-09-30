@@ -1,4 +1,4 @@
-import '../styles/global.css'
+import '@/styles/global.css'
 import { Slot } from 'expo-router'
 import {
   useFonts,
@@ -7,7 +7,7 @@ import {
   Poppins_600SemiBold,
   Poppins_700Bold,
 } from '@expo-google-fonts/poppins'
-import { Loading } from '../components/loading'
+import { Loading } from '@/components/loading'
 
 export default function LayoutRoot() {
   const [fontLoaded] = useFonts({
