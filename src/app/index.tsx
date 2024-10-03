@@ -13,8 +13,8 @@ export default function Home() {
         </TouchableOpacity>
       </View>
       <View className="px-6">
-        <Category name="Projeto" icon="code" />
-        <Category name="Site" icon="language" />
+        <Category name="Projeto" icon="code" isSelected />
+        <Category name="Site" icon="language" isSelected />
         <Category name="Video" icon="movie" />
       </View>
     </View>
