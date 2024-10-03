@@ -12,7 +12,11 @@ export default function Home() {
           <MaterialIcons name="add" size={32} color={'#2DD4BF'} />
         </TouchableOpacity>
       </View>
-      <Category />
+      <View className="px-6">
+        <Category name="Projeto" icon="code" />
+        <Category name="Site" icon="language" />
+        <Category name="Video" icon="movie" />
+      </View>
     </View>
   )
 }
