@@ -1,6 +1,6 @@
 import { Image, TouchableOpacity, View } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
-import { Category } from '@/components/category'
+import { Categories } from '@/components/categories'
 
 export default function Home() {
   return (
@@ -12,11 +12,8 @@ export default function Home() {
           <MaterialIcons name="add" size={32} color={'#2DD4BF'} />
         </TouchableOpacity>
       </View>
-      <View className="px-6">
-        <Category name="Projeto" icon="code" isSelected />
-        <Category name="Site" icon="language" isSelected />
-        <Category name="Video" icon="movie" />
-      </View>
+
+      <Categories />
     </View>
   )
 }
