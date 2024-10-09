@@ -1,6 +1,7 @@
 import { Image, TouchableOpacity, View } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
 import { Categories } from '@/components/categories'
+import { Link } from '@/components/link'
 
 export default function Home() {
   return (
@@ -14,6 +15,13 @@ export default function Home() {
       </View>
 
       <Categories />
+      <View className="p-3">
+        <Link
+          name="Rocketseat"
+          url="https://rocketseat.com.br"
+          onDetails={() => console.log('Clicou')}
+        />
+      </View>
     </View>
   )
 }
