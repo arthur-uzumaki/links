@@ -1,5 +1,5 @@
 import { categories } from '@/utils/categories'
-import { View, FlatList } from 'react-native'
+import { FlatList } from 'react-native'
 import { Category } from './category'
 
 export function Categories() {
