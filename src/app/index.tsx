@@ -1,7 +1,16 @@
-import { FlatList, Image, TouchableOpacity, View } from 'react-native'
+import {
+  FlatList,
+  Image,
+  Modal,
+  TouchableOpacity,
+  View,
+  Text,
+} from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
 import { Categories } from '@/components/categories'
 import { Link } from '@/components/link'
+import tailwind from 'tailwindcss/colors'
+import { Options } from '@/components/options'
 
 export default function Home() {
   return (
@@ -29,6 +38,37 @@ export default function Home() {
           />
         )}
       />
+
+      <Modal transparent visible>
+        <View className="flex-1  justify-end">
+          <View className="bg-zinc-900 border-t-2 border-t-gray-800 pb-8 p-11">
+            <View className="w-full flex-row mb-8 items-center">
+              <Text className="flex-1 text-xl font-medium text-gray-400 ">
+                Curso
+              </Text>
+              <TouchableOpacity activeOpacity={0.7}>
+                <MaterialIcons
+                  name="close"
+                  size={20}
+                  color={tailwind.gray[400]}
+                />
+              </TouchableOpacity>
+            </View>
+
+            <Text className="text-lg text-gray-200 font-semiBold  ">
+              Rocketseat
+            </Text>
+            <Text className="text-sm text-gray-400 ">
+              https://rocketseat.com.br
+            </Text>
+
+            <View className="flex-row w-full justify-between mt-8 border-t-2 border-t-gray-600 py-3">
+              <Options name="Excluir " icon="delete" variant="secondary" />
+              <Options name="Abrir" icon="language" />
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   )
 }
