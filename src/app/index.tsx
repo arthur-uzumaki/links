@@ -10,6 +10,7 @@ import { MaterialIcons } from '@expo/vector-icons'
 import { Categories } from '@/components/categories'
 import { Link } from '@/components/link'
 import tailwind from 'tailwindcss/colors'
+import { Options } from '@/components/options'
 
 export default function Home() {
   return (
@@ -60,6 +61,11 @@ export default function Home() {
             <Text className="text-sm text-gray-400 ">
               https://rocketseat.com.br
             </Text>
+
+            <View className="flex-row w-full justify-between mt-8 border-t-2 border-t-gray-600 py-3">
+              <Options name="Excluir " icon="delete" variant="secondary" />
+              <Options name="Abrir" icon="language" />
+            </View>
           </View>
         </View>
       </Modal>
