@@ -6,19 +6,25 @@ import {
   View,
   Text,
 } from 'react-native'
+import { router } from 'expo-router'
 import { MaterialIcons } from '@expo/vector-icons'
+
 import { Categories } from '@/components/categories'
 import { Link } from '@/components/link'
-import tailwind from 'tailwindcss/colors'
 import { Options } from '@/components/options'
+import tailwind from 'tailwindcss/colors'
 
 export default function Home() {
+  function navigateAddScreenLink() {
+    router.navigate('/add')
+  }
+
   return (
     <View className="flex-1 pt-16">
       <View className="px-6 w-full flex-row justify-between items-center mb-8">
         <Image source={require('@/assets/logo.png')} className="h-8 w-[38px]" />
 
-        <TouchableOpacity activeOpacity={0.8}>
+        <TouchableOpacity activeOpacity={0.8} onPress={navigateAddScreenLink}>
           <MaterialIcons name="add" size={32} color={'#2DD4BF'} />
         </TouchableOpacity>
       </View>
@@ -39,7 +45,7 @@ export default function Home() {
         )}
       />
 
-      <Modal transparent visible>
+      <Modal transparent visible={false}>
         <View className="flex-1  justify-end">
           <View className="bg-zinc-900 border-t-2 border-t-gray-800 pb-8 p-11">
             <View className="w-full flex-row mb-8 items-center">
