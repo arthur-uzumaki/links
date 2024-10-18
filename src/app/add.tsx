@@ -3,6 +3,7 @@ import { MaterialIcons } from '@expo/vector-icons'
 import tailwind from 'tailwindcss/colors'
 import { router } from 'expo-router'
 import { Categories } from '@/components/categories'
+import { Input } from '@/components/input'
 
 export default function Add() {
   function navigateHome() {
@@ -26,6 +27,11 @@ export default function Add() {
       </Text>
 
       <Categories />
+
+      <View className="gap-4 p-6 ">
+        <Input placeholder="Nome" />
+        <Input placeholder="Url" />
+      </View>
     </View>
   )
 }
