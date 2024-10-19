@@ -2,12 +2,24 @@ import { categories } from '@/utils/categories'
 import { FlatList } from 'react-native'
 import { Category } from './category'
 
-export function Categories() {
+interface CategoriesProps {
+  selected: string
+  onChange: (category: string) => void
+}
+
+export function Categories({ onChange, selected }: CategoriesProps) {
   return (
     <FlatList
       data={categories}
       keyExtractor={item => item.id}
-      renderItem={({ item }) => <Category name={item.name} icon={item.icon} />}
+      renderItem={({ item }) => (
+        <Category
+          name={item.name}
+          icon={item.icon}
+          isSelected={item.name === selected}
+          onPress={() => onChange(item.name)}
+        />
+      )}
       horizontal
       className="h-[52px] max-h-[52px]"
       contentContainerClassName="gap-6 px-6"

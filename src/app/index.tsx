@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import {
   FlatList,
   Image,
@@ -13,8 +14,11 @@ import { Categories } from '@/components/categories'
 import { Link } from '@/components/link'
 import { Options } from '@/components/options'
 import tailwind from 'tailwindcss/colors'
+import { categories } from '@/utils/categories'
 
 export default function Home() {
+  const [category, setCategory] = useState(categories[0].name)
+
   function navigateAddScreenLink() {
     router.navigate('/add')
   }
@@ -29,7 +33,7 @@ export default function Home() {
         </TouchableOpacity>
       </View>
 
-      <Categories />
+      <Categories selected={category} onChange={setCategory} />
       <FlatList
         data={['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']}
         keyExtractor={item => item}

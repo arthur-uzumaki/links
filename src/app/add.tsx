@@ -9,12 +9,13 @@ import { Input } from '@/components/input'
 import { Button } from '@/components/button'
 
 export default function Add() {
+  const [category, setCategory] = useState<string>('')
+  const [name, setName] = useState<string>('')
+  const [url, setUrl] = useState<string>('')
+
   function navigateHome() {
     router.navigate('/')
   }
-
-  const [name, setName] = useState<string>('')
-  const [url, setUrl] = useState<string>('')
 
   function handleAdd() {
     console.log({ name, url })
@@ -37,7 +38,7 @@ export default function Add() {
         Selecione uma categoria
       </Text>
 
-      <Categories />
+      <Categories selected={category} onChange={setCategory} />
 
       <View className="gap-4 p-6 ">
         <Input
