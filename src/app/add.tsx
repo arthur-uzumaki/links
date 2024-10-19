@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Text, TouchableOpacity, View } from 'react-native'
+import { Alert, Text, TouchableOpacity, View } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
 import tailwind from 'tailwindcss/colors'
 
@@ -7,16 +7,29 @@ import { router } from 'expo-router'
 import { Categories } from '@/components/categories'
 import { Input } from '@/components/input'
 import { Button } from '@/components/button'
+import { colors } from '@/styles/colors'
 
 export default function Add() {
+  const [category, setCategory] = useState<string>('')
+  const [name, setName] = useState<string>('')
+  const [url, setUrl] = useState<string>('')
+
   function navigateHome() {
     router.navigate('/')
   }
 
-  const [name, setName] = useState<string>('')
-  const [url, setUrl] = useState<string>('')
-
   function handleAdd() {
+    if (!category) {
+      return Alert.alert('Categoria', 'Selecione a categoria')
+    }
+
+    if (!name.trim()) {
+      return Alert.alert('Nome', 'Selecione nome')
+    }
+    if (!url.trim()) {
+      return Alert.alert('URL', 'Selecione uma  URL')
+    }
+
     console.log({ name, url })
   }
 
@@ -37,7 +50,7 @@ export default function Add() {
         Selecione uma categoria
       </Text>
 
-      <Categories />
+      <Categories selected={category} onChange={setCategory} />
 
       <View className="gap-4 p-6 ">
         <Input
@@ -46,7 +59,7 @@ export default function Add() {
           autoCorrect={false}
           autoFocus
         />
-        <Input placeholder="Url" onChangeText={setUrl} />
+        <Input placeholder="URL" onChangeText={setUrl} />
         <Button title="Adicionar" onPress={handleAdd} />
       </View>
     </View>
