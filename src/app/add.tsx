@@ -8,6 +8,7 @@ import { Categories } from '@/components/categories'
 import { Input } from '@/components/input'
 import { Button } from '@/components/button'
 import { colors } from '@/styles/colors'
+import { linkStorage } from '@/storage/link-storage'
 
 export default function Add() {
   const [category, setCategory] = useState<string>('')
@@ -18,19 +19,33 @@ export default function Add() {
     router.navigate('/')
   }
 
-  function handleAdd() {
-    if (!category) {
-      return Alert.alert('Categoria', 'Selecione a categoria')
-    }
+  async function handleAdd() {
+    try {
+      if (!category) {
+        return Alert.alert('Categoria', 'Selecione a categoria')
+      }
 
-    if (!name.trim()) {
-      return Alert.alert('Nome', 'Selecione nome')
-    }
-    if (!url.trim()) {
-      return Alert.alert('URL', 'Selecione uma  URL')
-    }
+      if (!name.trim()) {
+        return Alert.alert('Nome', 'Selecione nome')
+      }
+      if (!url.trim()) {
+        return Alert.alert('URL', 'Selecione uma  URL')
+      }
 
-    console.log({ name, url })
+      await linkStorage.save({
+        id: new Date().getTime().toString(),
+        category,
+        name,
+        url,
+      })
+
+      const data = await linkStorage.get()
+
+      console.log(data)
+    } catch (error) {
+      Alert.alert('Não foi possível de salvar link')
+      console.log(error)
+    }
   }
 
   return (
@@ -59,7 +74,13 @@ export default function Add() {
           autoCorrect={false}
           autoFocus
         />
-        <Input placeholder="URL" onChangeText={setUrl} />
+        <Input
+          placeholder="URL"
+          onChangeText={setUrl}
+          autoCapitalize="none"
+          autoCorrect={false}
+        />
+
         <Button title="Adicionar" onPress={handleAdd} />
       </View>
     </View>
