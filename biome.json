@@ -23,6 +23,9 @@
       "recommended": true,
       "complexity": {
         "noUselessCatch": "off"
+      },
+      "correctness": {
+        "useExhaustiveDependencies": "off"
       }
     }
   },

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   FlatList,
   Image,
@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   View,
   Text,
+  Alert,
 } from 'react-native'
 import { router } from 'expo-router'
 import { MaterialIcons } from '@expo/vector-icons'
@@ -15,13 +16,29 @@ import { Link } from '@/components/link'
 import { Options } from '@/components/options'
 import tailwind from 'tailwindcss/colors'
 import { categories } from '@/utils/categories'
+import { linkStorage, type LinkStorage } from '@/storage/link-storage'
 
 export default function Home() {
   const [category, setCategory] = useState(categories[0].name)
+  const [links, setLinks] = useState<LinkStorage[] | null>(null)
 
   function navigateAddScreenLink() {
     router.navigate('/add')
   }
+
+  useEffect(() => {
+    async function getLinks() {
+      try {
+        const response = await linkStorage.get()
+        const data = setLinks(response)
+        return data
+      } catch (error) {
+        Alert.alert('Erro', 'Não foi possível obter os links  ')
+      }
+    }
+
+    getLinks()
+  }, [category])
 
   return (
     <View className="flex-1 pt-16">
@@ -35,15 +52,15 @@ export default function Home() {
 
       <Categories selected={category} onChange={setCategory} />
       <FlatList
-        data={['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']}
-        keyExtractor={item => item}
+        data={links}
+        keyExtractor={item => item.id}
         className="border-t border-t-gray-600"
         contentContainerClassName="gap-5 p-6 pb-[100px]"
         showsVerticalScrollIndicator={false}
-        renderItem={() => (
+        renderItem={({ item }) => (
           <Link
-            name="Rocketseat"
-            url="https://rocketseat.com.br"
+            name={item.name}
+            url={item.url}
             onDetails={() => console.log('Clicou')}
           />
         )}

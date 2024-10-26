@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const LINK_STORAGE_KEY = env.EXPO_PUBLIC_LINK
 
-interface LinkStorage {
+export interface LinkStorage {
   id: string
   name: string
   url: string
