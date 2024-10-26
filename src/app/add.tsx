@@ -38,6 +38,10 @@ export default function Add() {
         name,
         url,
       })
+
+      Alert.alert('Sucesso', 'Novo link adicionado com sucesso!', [
+        { text: 'Ok', onPress: () => router.back() },
+      ])
     } catch (error) {
       Alert.alert('Error', 'Não foi possível de salvar o link')
       console.log(error)
