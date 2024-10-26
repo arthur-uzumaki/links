@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import {
   FlatList,
   Image,
@@ -8,7 +8,7 @@ import {
   Text,
   Alert,
 } from 'react-native'
-import { router } from 'expo-router'
+import { router, useFocusEffect } from 'expo-router'
 import { MaterialIcons } from '@expo/vector-icons'
 
 import { Categories } from '@/components/categories'
@@ -26,19 +26,21 @@ export default function Home() {
     router.navigate('/add')
   }
 
-  useEffect(() => {
-    async function getLinks() {
-      try {
-        const response = await linkStorage.get()
-        const data = setLinks(response)
-        return data
-      } catch (error) {
-        Alert.alert('Erro', 'Não foi possível obter os links  ')
+  useFocusEffect(
+    useCallback(() => {
+      async function getLinks() {
+        try {
+          const response = await linkStorage.get()
+          const data = setLinks(response)
+          return data
+        } catch (error) {
+          Alert.alert('Erro', 'Não foi possível obter os links  ')
+        }
       }
-    }
 
-    getLinks()
-  }, [category])
+      getLinks()
+    }, [category])
+  )
 
   return (
     <View className="flex-1 pt-16">
