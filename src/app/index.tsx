@@ -22,10 +22,23 @@ export default function Home() {
   const [showModal, setShowModal] = useState<boolean>(false)
   const [category, setCategory] = useState(categories[0].name)
   const [links, setLinks] = useState<LinkStorage[] | null>(null)
-  const [link, setLink] = useState<LinkStorage | null>(null)
+  const [link, setLink] = useState<LinkStorage>({} as LinkStorage)
 
   function navigateAddScreenLink() {
     router.navigate('/add')
+  }
+
+  async function getLinks() {
+    try {
+      const response = await linkStorage.get()
+
+      const filteredLink = response.filter(item => item.category === category)
+
+      const data = setLinks(filteredLink)
+      return data
+    } catch (error) {
+      Alert.alert('Erro', 'Não foi possível obter os links  ')
+    }
   }
 
   function handleDetails(selected: LinkStorage) {
@@ -33,23 +46,29 @@ export default function Home() {
     setLink(selected)
   }
 
+  async function removeLink() {
+    try {
+      await linkStorage.remove(link?.id)
+      getLinks()
+      setShowModal(false)
+    } catch (error) {
+      Alert.alert('Erro', 'Não foi possível remover link ')
+      console.log(error)
+    }
+  }
+
+  function handleRemove() {
+    Alert.alert('Excluir', 'Deseja realmente excluir?', [
+      { style: 'cancel', text: 'Não' },
+      {
+        text: 'Sim',
+        onPress: removeLink,
+      },
+    ])
+  }
+
   useFocusEffect(
     useCallback(() => {
-      async function getLinks() {
-        try {
-          const response = await linkStorage.get()
-
-          const filteredLink = response.filter(
-            item => item.category === category
-          )
-
-          const data = setLinks(filteredLink)
-          return data
-        } catch (error) {
-          Alert.alert('Erro', 'Não foi possível obter os links  ')
-        }
-      }
-
       getLinks()
     }, [category])
   )
@@ -105,7 +124,12 @@ export default function Home() {
             <Text className="text-sm text-gray-400 ">{link?.url}</Text>
 
             <View className="flex-row w-full justify-between mt-8 border-t-2 border-t-gray-600 py-3">
-              <Options name="Excluir " icon="delete" variant="secondary" />
+              <Options
+                name="Excluir "
+                icon="delete"
+                variant="secondary"
+                onPress={handleRemove}
+              />
               <Options name="Abrir" icon="language" />
             </View>
           </View>
