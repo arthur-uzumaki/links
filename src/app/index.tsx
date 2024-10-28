@@ -7,6 +7,7 @@ import {
   View,
   Text,
   Alert,
+  Linking,
 } from 'react-native'
 import { router, useFocusEffect } from 'expo-router'
 import { MaterialIcons } from '@expo/vector-icons'
@@ -53,6 +54,16 @@ export default function Home() {
       setShowModal(false)
     } catch (error) {
       Alert.alert('Erro', 'Não foi possível remover link ')
+      console.log(error)
+    }
+  }
+
+  async function handleOpen() {
+    try {
+      await Linking.openURL(link.url)
+      setShowModal(false)
+    } catch (error) {
+      Alert.alert('Link', 'Não foi possível abrir o link')
       console.log(error)
     }
   }
@@ -130,7 +141,7 @@ export default function Home() {
                 variant="secondary"
                 onPress={handleRemove}
               />
-              <Options name="Abrir" icon="language" />
+              <Options name="Abrir" icon="language" onPress={handleOpen} />
             </View>
           </View>
         </View>
