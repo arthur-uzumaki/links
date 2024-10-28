@@ -31,7 +31,12 @@ export default function Home() {
       async function getLinks() {
         try {
           const response = await linkStorage.get()
-          const data = setLinks(response)
+
+          const filteredLink = response.filter(
+            item => item.category === category
+          )
+
+          const data = setLinks(filteredLink)
           return data
         } catch (error) {
           Alert.alert('Erro', 'Não foi possível obter os links  ')
