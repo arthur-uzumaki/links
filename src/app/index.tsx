@@ -19,11 +19,18 @@ import { categories } from '@/utils/categories'
 import { linkStorage, type LinkStorage } from '@/storage/link-storage'
 
 export default function Home() {
+  const [showModal, setShowModal] = useState<boolean>(false)
   const [category, setCategory] = useState(categories[0].name)
   const [links, setLinks] = useState<LinkStorage[] | null>(null)
+  const [link, setLink] = useState<LinkStorage | null>(null)
 
   function navigateAddScreenLink() {
     router.navigate('/add')
+  }
+
+  function handleDetails(selected: LinkStorage) {
+    setShowModal(true)
+    setLink(selected)
   }
 
   useFocusEffect(
@@ -68,19 +75,22 @@ export default function Home() {
           <Link
             name={item.name}
             url={item.url}
-            onDetails={() => console.log('Clicou')}
+            onDetails={() => handleDetails(item)}
           />
         )}
       />
 
-      <Modal transparent visible={false}>
+      <Modal transparent visible={showModal} animationType="fade">
         <View className="flex-1  justify-end">
           <View className="bg-zinc-900 border-t-2 border-t-gray-800 pb-8 p-11">
             <View className="w-full flex-row mb-8 items-center">
               <Text className="flex-1 text-xl font-medium text-gray-400 ">
-                Curso
+                {link?.category}
               </Text>
-              <TouchableOpacity activeOpacity={0.7}>
+              <TouchableOpacity
+                activeOpacity={0.7}
+                onPress={() => setShowModal(false)}
+              >
                 <MaterialIcons
                   name="close"
                   size={20}
@@ -90,11 +100,9 @@ export default function Home() {
             </View>
 
             <Text className="text-lg text-gray-200 font-semiBold  ">
-              Rocketseat
+              {link?.name}
             </Text>
-            <Text className="text-sm text-gray-400 ">
-              https://rocketseat.com.br
-            </Text>
+            <Text className="text-sm text-gray-400 ">{link?.url}</Text>
 
             <View className="flex-row w-full justify-between mt-8 border-t-2 border-t-gray-600 py-3">
               <Options name="Excluir " icon="delete" variant="secondary" />
